@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kids Bible Lessons</title>
+  <style>
+    :root {
+      --primary: #006cb6;
+      --dark: #052b47;
+      --light: #f5faf8;
+      --accent: #e1a730;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--dark));
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0 0 0.5rem;
+      font-size: 1.8rem;
+    }
+
+    header p {
+      margin: 0;
+      opacity: 0.9;
+    }
+
+    .container {
+      display: flex;
+      min-height: calc(100vh - 120px);
+    }
+
+    nav {
+      width: 260px;
+      background: white;
+      border-right: 1px solid #ddd;
+      padding: 1rem;
+    }
+
+    nav h2 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .lesson-link {
+      display: block;
+      padding: 0.6rem 0.8rem;
+      margin-bottom: 0.4rem;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--dark);
+    }
+
+    .lesson-link.active,
+    .lesson-link:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    main {
+      flex: 1;
+      padding: 1.5rem 2rem;
+      max-width: 900px;
+    }
+
+    section {
+      margin-bottom: 1.8rem;
+    }
+
+    section h3 {
+      margin-bottom: 0.4rem;
+      color: var(--primary);
+    }
+
+    .big-idea {
+      background: white;
+      border-left: 6px solid var(--accent);
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 1.1rem;
+    }
+
+    .verse {
+      background: #eef6fb;
+      padding: 1rem;
+      border-radius: 8px;
+      font-style: italic;
+    }
+
+    .memory {
+      background: var(--dark);
+      color: white;
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      nav {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        overflow-x: auto;
+      }
+
+      .lesson-link {
+        white-space: nowrap;
+        margin-right: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Kids Bible Lessons</h1>
+    <p>Learning God’s Word, Seeing Jesus, Living It Out</p>
+  </header>
+
+  <div class="container">
+    <nav id="lessonNav">
+      <h2>Lessons</h2>
+    </nav>
+
+    <main id="lessonContent"></main>
+  </div>
+
+  <footer>
+    Built for 2nd–4th Grade Bible Study
+  </footer>
+
+  <script>
+    const lessons = [
+      {
+        title: "God Sees the Heart",
+        bigIdea: "God cares about what’s happening inside us, not just what we do on the outside.",
+        passage: "1 Samuel 16:7 — People look at the outside, but the Lord looks at the heart.",
+        explain: [
+          "People often care about being the best or strongest.",
+          "God chose David because of his heart.",
+          "God sees us even when no one else does."
+        ],
+        questions: [
+          "What do people notice on the outside?",
+          "What does God see in our hearts?",
+          "Why does God care about our hearts?"
+        ],
+        application: [
+          "Tell the truth even when it’s hard",
+          "Be kind when no one is watching",
+          "Choose patience instead of anger"
+        ],
+        memory: "The Lord looks at the heart. — 1 Samuel 16:7"
+      },
+      {
+        title: "Jesus Is the Good Shepherd",
+        bigIdea: "Jesus loves us, watches over us, and helps us when we’re scared or lost.",
+        passage: "John 10:11 — Jesus said, ‘I am the good shepherd.’",
+        explain: [
+          "Sheep need a shepherd to protect them.",
+          "Jesus knows us and cares for us.",
+          "Jesus never leaves us alone."
+        ],
+        questions: [
+          "Why do sheep need a shepherd?",
+          "When do kids feel scared or lonely?",
+          "How can we listen to Jesus?"
+        ],
+        application: [
+          "Pray when you’re afraid",
+          "Ask for help when you need it",
+          "Trust Jesus on hard days"
+        ],
+        memory: "I am the good shepherd. — John 10:11"
+      },
+      {
+        title: "Jesus Loves the Outsider",
+        bigIdea: "Jesus loves everyone — even people others don’t like or leave out.",
+        passage: "Luke 19:1–5 — Jesus noticed Zacchaeus and chose to be with him.",
+        explain: [
+          "Zacchaeus was an outsider.",
+          "Jesus noticed him when others ignored him.",
+          "Jesus’ love changes hearts."
+        ],
+        questions: [
+          "Why didn’t people like Zacchaeus?",
+          "How did Jesus treat him?",
+          "Who feels left out today?"
+        ],
+        application: [
+          "Include someone who is alone",
+          "Be kind to people others avoid",
+          "Show Jesus’ love at school"
+        ],
+        memory: "The Son of Man came to seek and save the lost. — Luke 19:10"
+      }
+    ];
+
+    const nav = document.getElementById("lessonNav");
+    const content = document.getElementById("lessonContent");
+
+    function loadLesson(index) {
+      document.querySelectorAll('.lesson-link').forEach(l => l.classList.remove('active'));
+      document.getElementById(`lesson-${index}`).classList.add('active');
+
+      const l = lessons[index];
+      content.innerHTML = `
+        <h2>${l.title}</h2>
+        <section class="big-idea"><strong>Big Idea:</strong> ${l.bigIdea}</section>
+        <section class="verse"><strong>Bible Passage:</strong> ${l.passage}</section>
+        <section><h3>Explain It</h3><ul>${l.explain.map(e => `<li>${e}</li>`).join('')}</ul></section>
+        <section><h3>Discussion Questions</h3><ul>${l.questions.map(q => `<li>${q}</li>`).join('')}</ul></section>
+        <section><h3>Life Application</h3><ul>${l.application.map(a => `<li>${a}</li>`).join('')}</ul></section>
+        <section class="memory">${l.memory}</section>
+      `;
+    }
+
+    lessons.forEach((lesson, index) => {
+      const link = document.createElement('a');
+      link.textContent = lesson.title;
+      link.className = 'lesson-link';
+      link.id = `lesson-${index}`;
+      link.onclick = () => loadLesson(index);
+      nav.appendChild(link);
+    });
+
+    loadLesson(0);
+  </script>
+</body>
+</html>
