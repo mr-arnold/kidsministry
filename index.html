@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>244 Kingdom Kids</title>
+  <title>244 Kingdom Kids Full Curriculum</title>
   <style>
     :root {
       --bg-app: #f8fafc;
@@ -14,7 +14,6 @@
       --border: #e2e8f0;
       --accent: #4f46e5;
       --accent-soft: #f5f3ff;
-      --nav-hover: #f1f5f9;
       --toggle-bg: #e2e8f0;
     }
 
@@ -26,7 +25,6 @@
       --border: #1e293b;
       --accent: #818cf8;
       --accent-soft: rgba(79, 70, 229, 0.2);
-      --nav-hover: #1e293b;
       --toggle-bg: #334155;
     }
 
@@ -35,16 +33,12 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    html,
     body {
       margin: 0;
-      padding: 0;
-      height: 100%;
       background: var(--bg-app);
-      font-family: 'Inter', -apple-system, system-ui, sans-serif;
+      font-family: 'Inter', system-ui;
       color: var(--text-main);
-      overflow-x: hidden;
-      overflow-y: auto;
+      line-height: 1.6;
     }
 
     header {
@@ -62,57 +56,8 @@
 
     .logo {
       font-weight: 800;
-      font-size: 1.1rem;
       color: var(--accent);
-    }
-
-    .switch-container {
-      display: flex;
-      align-items: center;
-      background: var(--toggle-bg);
-      width: 58px;
-      height: 30px;
-      border-radius: 20px;
-      position: relative;
-      cursor: pointer;
-      padding: 3px;
-    }
-
-    .switch-knob {
-      width: 24px;
-      height: 24px;
-      background: white;
-      border-radius: 50%;
-      position: absolute;
-      left: 3px;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      z-index: 2;
-    }
-
-    [data-theme="dark"] .switch-knob {
-      transform: translateX(28px);
-      background: #1e293b;
-    }
-
-    .switch-icons {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 5px;
-      color: var(--text-muted);
-      z-index: 1;
-    }
-
-    .switch-icons svg {
-      width: 12px;
-      height: 12px;
-      stroke: currentColor;
-      stroke-width: 3;
-      fill: none;
+      font-size: 1.2rem;
     }
 
     .app-viewport {
@@ -121,419 +66,457 @@
     }
 
     nav {
-      width: 280px;
+      width: 300px;
       background: var(--bg-sidebar);
       border-right: 1px solid var(--border);
-      padding: 1.5rem 0.75rem;
+      padding: 1.5rem;
       flex-shrink: 0;
+      overflow-y: auto;
+      height: calc(100vh - 64px);
+      position: sticky;
+      top: 64px;
     }
 
     .lesson-link {
       display: block;
       padding: 12px;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
       border-radius: 8px;
       text-decoration: none;
       color: var(--text-main);
-      font-size: 0.9rem;
-      font-weight: 500;
+      font-size: 0.95rem;
       cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .lesson-link:hover {
+      background: var(--nav-hover);
     }
 
     .lesson-link.active {
       background: var(--accent-soft);
       color: var(--accent);
+      font-weight: 700;
+      border-left: 4px solid var(--accent);
     }
 
     main {
       flex: 1;
-      padding: 2rem 1.5rem 140px 1.5rem;
+      padding: 2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
+      padding-bottom: 120px;
     }
 
     .content-container {
       width: 100%;
-      max-width: 680px;
+      max-width: 720px;
     }
 
     .chip {
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       font-weight: 700;
       color: var(--accent);
       background: var(--accent-soft);
-      padding: 4px 10px;
-      border-radius: 6px;
-      margin-bottom: 1rem;
+      padding: 6px 14px;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
       display: inline-block;
     }
 
-    h1.lesson-title {
-      font-size: 2.2rem;
-      margin: 0 0 0.5rem 0;
-      font-weight: 800;
-      line-height: 1.1;
-    }
-
-    .objective {
-      font-style: italic;
-      color: var(--text-muted);
-      margin-bottom: 2rem;
-      font-size: 1rem;
-    }
-
-    .teacher-note {
-      background: var(--bg-sidebar);
-      border: 1px solid var(--border);
-      border-left: 4px solid #f59e0b;
+    .sticky-box {
+      background: #fffbeb;
+      border: 1px solid #fef3c7;
+      border-left: 5px solid #f59e0b;
       padding: 1.25rem;
-      border-radius: 8px;
+      border-radius: 12px;
       margin-bottom: 2rem;
-      font-size: 0.95rem;
+    }
+
+    [data-theme="dark"] .sticky-box {
+      background: #1e1b16;
+      border-color: #451a03;
+      color: #fbbf24;
     }
 
     section {
+      margin-bottom: 3rem;
       width: 100%;
-      margin-bottom: 2.5rem;
     }
 
-    section h3 {
-      font-size: 0.75rem;
+    h3 {
+      font-size: 0.85rem;
       text-transform: uppercase;
       color: var(--text-muted);
-      letter-spacing: 0.1em;
-      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
     }
 
-    li {
+    .teach-item {
       background: var(--bg-sidebar);
       border: 1px solid var(--border);
-      padding: 1.25rem;
-      border-radius: 12px;
-      margin-bottom: 12px;
+      padding: 1.5rem;
+      border-radius: 14px;
+      margin-bottom: 15px;
       list-style: none;
-      line-height: 1.5;
+      position: relative;
     }
 
     .cue {
       color: var(--accent);
-      font-weight: 700;
-      font-size: 0.8rem;
+      font-weight: 900;
+      font-size: 0.75rem;
       text-transform: uppercase;
       display: block;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
     }
 
-    .activity-box {
+    .activity-card {
       background: var(--accent-soft);
       border: 2px dashed var(--accent);
       padding: 1.5rem;
-      border-radius: 16px;
-      margin-bottom: 2rem;
+      border-radius: 20px;
+      color: var(--text-main);
+    }
+
+    .question-list li {
+      background: none;
+      border: none;
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--border);
+      border-radius: 0;
     }
 
     .memory-card {
       background: var(--accent);
       color: white;
-      padding: 2.5rem 1.5rem;
-      border-radius: 16px;
+      padding: 2.5rem;
+      border-radius: 24px;
       text-align: center;
-      font-size: 1.4rem;
-      font-weight: 700;
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-top: 3rem;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
     }
 
     .mobile-nav-bar {
       display: none;
       position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 90px;
-      background: linear-gradient(to top, var(--bg-app) 60%, transparent);
-      padding: 15px 1.5rem;
-      z-index: 100;
-      align-items: center;
-      justify-content: center;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
     }
 
     .footer-btn {
-      background: #111827;
-      color: white;
-      width: 100%;
-      max-width: 400px;
-      height: 52px;
-      border-radius: 14px;
+      background: #000;
+      color: #fff;
+      padding: 16px 32px;
+      border-radius: 40px;
       border: none;
-      font-weight: 600;
-      font-size: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    [data-theme="dark"] .footer-btn {
-      background: var(--accent);
+      font-weight: 700;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
     }
 
     @media (max-width: 850px) {
       nav {
+        display: none;
         position: fixed;
-        bottom: 0;
+        top: 64px;
         left: 0;
         width: 100%;
-        height: 75vh;
-        z-index: 1000;
-        transform: translateY(100%);
-        border-right: none;
-        border-top: 1px solid var(--border);
-        border-radius: 24px 24px 0 0;
-        transition: transform 0.4s ease;
-        overflow-y: auto;
+        height: calc(100vh - 64px);
+        z-index: 90;
+        background: var(--bg-sidebar);
       }
 
       nav.open {
-        transform: translateY(0);
-      }
-
-      .app-viewport nav {
-        width: 100%;
-      }
-
-      nav:not(.open) {
-        display: none;
-      }
-
-      .mobile-nav-bar {
-        display: flex;
-      }
-
-      .overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 999;
-        backdrop-filter: blur(4px);
-      }
-
-      .overlay.open {
         display: block;
       }
-    }
-
-    @media (min-width: 851px) {
-      nav {
-        display: block !important;
-        position: static;
-        height: auto;
-        transform: none;
-        border-radius: 0;
-      }
 
       .mobile-nav-bar {
-        display: none;
+        display: block;
+      }
+
+      main {
+        padding: 1rem;
       }
     }
   </style>
 </head>
 
 <body>
-
   <header>
     <div class="logo">244 Kingdom Kids</div>
-    <div class="switch-container" onclick="toggleTheme()">
-      <div class="switch-icons">
-        <svg viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="5"></circle>
-          <path
-            d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.42 5.58l1.42-1.42">
-          </path>
-        </svg>
-        <svg viewBox="0 0 24 24">
-          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
-        </svg>
-      </div>
-      <div class="switch-knob" id="knob"></div>
-    </div>
+    <div
+      style="font-size: 0.8rem; font-weight: 700; background: var(--accent-soft); color: var(--accent); padding: 5px 15px; border-radius: 50px;">
+      LEVEL 1: 16 LESSONS</div>
   </header>
-
   <div class="app-viewport">
-    <div class="overlay" id="overlay" onclick="toggleNav()"></div>
-    <nav id="lessonNav">
-      <h2 style="font-size:0.7rem; text-transform:uppercase; color:var(--text-muted); margin: 0 0 1rem 10px;">Curriculum
-      </h2>
-    </nav>
+    <nav id="lessonNav"></nav>
     <main>
       <div class="content-container" id="lessonContent"></div>
     </main>
   </div>
-
-  <div class="mobile-nav-bar">
-    <button class="footer-btn" onclick="toggleNav()">
-      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-        <path d="M4 6h16M4 12h16m-7 6h7"></path>
-      </svg>
-      Select Lesson
-    </button>
-  </div>
+  <div class="mobile-nav-bar"><button class="footer-btn" onclick="toggleNav()">Select Lesson</button></div>
 
   <script>
     const lessons = [
       {
-        title: "God Sees the Heart",
+        title: "1. God Sees the Heart",
         passage: "1 Samuel 16:1–13",
-        objective: "Kids will learn that God values our character and inner thoughts more than our outward success or appearance.",
-        teacherNotes: "Young kids often focus on 'the biggest' or 'the fastest.' Shift their focus to unseen qualities like kindness and honesty.",
+        objective: "Kids will learn that God cares more about who they are on the inside (character) than how they look or perform.",
+        sticky: "David was so 'unimportant' to his dad that Jesse didn't even bother calling him in from the field for the meeting. He was the forgotten brother!",
         teach: [
-          { cue: "Intro Question", text: "Ask: 'If you could have any superpower based on how you look, what would it be?' Allow 3 kids to answer." },
-          { cue: "The Bible Story", text: "Read 1 Samuel 16. Describe Samuel looking at the big, strong brothers and God saying 'Nope.' Then describe the young shepherd David being the one." },
-          { cue: "Discussion Queue", text: "Ask: 'Why do you think God chose the smallest brother instead of the strongest one?' [Pause for 30 seconds for answers]" }
+          { cue: "Teacher Intro", text: "Explain: Today we learn that God has 'heart-vision.' He sees things we can't see." },
+          { cue: "[Discussion] 1 min", text: "Ask: 'If you had to pick a team for basketball, would you pick the tallest person or the person who is the kindest?' [Wait for answers]" },
+          { cue: "The Bible Story", text: "Read 1 Sam 16. Describe Samuel's mistake—he thought the big brother Eliab must be the King because he looked like one. But God said 'No.'" },
+          { cue: "[Action Queue]", text: "Have kids put their hands over their eyes like binoculars. Say: 'We look at the outside, but God looks at the heart!'" }
         ],
-        activity: { name: "The 'Heart' Drawing", desc: "Give each kid a piece of paper. Have them draw a large heart. Inside the heart, have them draw or write one thing they love about God or one way they can be kind. Explain that this 'inside' part is what God sees." },
-        questions: ["Does God care if we are the tallest in class?", "What are some 'heart' qualities that God loves?", "How can we 'look' at people the way God does?"],
+        activity: { name: "The Heart Reveal", desc: "Give kids a piece of paper with a large heart drawn on it. Have them draw one thing they are good at that nobody sees (like being a good helper at home or being kind to a sibling)." },
+        questions: ["Why didn't David's dad bring him to the meeting at first?", "What are 3 'heart' qualities that make God happy?", "Does God love us more if we are the best at sports?"],
         memory: "The Lord looks at the heart. — 1 Samuel 16:7"
       },
       {
-        title: "Jesus Loves the Outsider",
+        title: "2. Jesus Loves the Outsider",
         passage: "Luke 19:1–10",
-        objective: "Kids will understand that Jesus actively looks for people who feel lonely or left out.",
-        teacherNotes: "Zacchaeus was a tax collector (often considered 'the bad guy'). Emphasize that Jesus loves everyone, even people who have made mistakes.",
+        objective: "To show that Jesus notices and loves the people that everyone else ignores or dislikes.",
+        sticky: "Zacchaeus wasn't just short; he was a Tax Collector. In those days, that meant he was a 'legal thief' who took people's money. He was the person everyone wanted to stay away from.",
         teach: [
-          { cue: "Action Queue", text: "Have all the kids stand up and try to see over each other's shoulders. Pretend there is a parade coming!" },
-          { cue: "The Story", text: "Tell the story of Zacchaeus climbing the tree. Use high-energy tones when Jesus calls his name." },
-          { cue: "Discussion Queue", text: "Ask: 'How do you think Zacchaeus felt when the King of Kings knew his name?'" }
+          { cue: "[Action Queue]", text: "Have all kids stand up and pretend to be a thick crowd. Have one kid try to see over them. It's hard!" },
+          { cue: "The Bible Story", text: "Tell the story of Zacchaeus. He was rich but lonely. He climbed a Sycamore tree just to get a glimpse of Jesus." },
+          { cue: "[Discussion] 2 min", text: "Ask: 'Why do you think the crowd was mad that Jesus went to Zacchaeus' house?' [Discuss that Jesus loves 'bad' people too]." },
+          { cue: "Teacher Tip", text: "Explain that when Jesus called his name, it changed everything. Being 'known' by Jesus changes our hearts." }
         ],
-        activity: { name: "The Name Game", desc: "Sit in a circle. Each person says the name of the person to their right and one nice thing about them. This illustrates how Jesus knows us by name and values us." },
-        questions: ["Why was Zacchaeus hiding in a tree?", "How did Jesus show he cared?", "Who is someone at school who might feel like an 'outsider'?"],
+        activity: { name: "Name Tags", desc: "Have kids create a fancy name tag for themselves. Explain that Jesus knows their name just like He knew Zacchaeus' name in that big tree." },
+        questions: ["How did Jesus know Zacchaeus was in the tree?", "Why did Zacchaeus decide to give his money back?", "Who is someone in your class that seems lonely? How can you show them Jesus' love?"],
         memory: "The Son of Man came to seek and save the lost. — Luke 19:10"
       },
       {
-        title: "Jesus Calms the Storm",
+        title: "3. Jesus Calms the Storm",
         passage: "Mark 4:35–41",
-        objective: "To show kids that they don't have to be afraid because Jesus is more powerful than any 'storm' in their lives.",
-        teacherNotes: "Kids have real fears (the dark, storms, being alone). Use this to validate their feelings while pointing to Jesus' peace.",
+        objective: "To teach kids that they can have peace because Jesus is bigger than their scariest problems.",
+        sticky: "Professional fishermen—men who spent their whole lives on the water—were terrified of this storm. It wasn't just a little rain; it was a life-threatening hurricane.",
         teach: [
-          { cue: "Intro", text: "Ask: 'What is the scariest sound you've ever heard?' [Discuss for 1 minute]" },
-          { cue: "The Story", text: "Read the passage. Act out the 'Peace, be still!' moment with a loud voice and then a whisper." },
-          { cue: "Discussion Queue", text: "Ask: 'Where was Jesus during the storm? (Sleeping). Why wasn't He scared?'" }
+          { cue: "[Action Queue]", text: "Make 'storm sounds.' Snap fingers for rain, slap laps for thunder. Then, on the count of 3, the teacher shouts 'PEACE, BE STILL!' and everyone must be silent." },
+          { cue: "The Bible Story", text: "Jesus was sleeping on a pillow! The disciples thought He didn't care. But Jesus wasn't worried because He created the wind." },
+          { cue: "[Discussion] 1 min", text: "Ask: 'What is something that makes you feel scared or worried?' [Allow 2-3 kids to share]." }
         ],
-        activity: { name: "Freeze Dance: Storm Edition", desc: "Play some 'stormy' music (or drum on the floor). Kids dance wildly like a storm. When you shout 'PEACE, BE STILL,' everyone must freeze instantly. This helps them remember Jesus' power over chaos." },
-        questions: ["Why were the disciples scared if Jesus was right there?", "What can you say to Jesus when you feel afraid at night?", "Does Jesus ever leave us during a storm?"],
+        activity: { name: "Boat Folding", desc: "Fold a simple paper boat. Have them write 'JESUS IS IN MY BOAT' on the side. This reminds them He is always there during life's storms." },
+        questions: ["Why was Jesus sleeping while the boat was sinking?", "What did the disciples learn about Jesus that day?", "What can you say to yourself the next time you feel scared?"],
         memory: "Even the wind and waves obey him. — Mark 4:41"
       },
       {
-        title: "Jesus Feeds the Crowd",
+        title: "4. Jesus Feeds the 5,000",
         passage: "John 6:1–14",
-        objective: "To teach kids that no gift is too small when given to Jesus.",
-        teacherNotes: "Focus on the young boy’s willingness to share. Kids often feel like they don't have much to offer.",
+        objective: "To show that God can do a lot with the little bit we have to offer.",
+        sticky: "The Bible says 5,000 men, but back then they didn't count women and kids. There were likely 15,000+ hungry people—enough to fill a whole stadium!",
         teach: [
-          { cue: "Action", text: "Have kids pretend to rub their bellies and say, 'I'm hungry!'" },
-          { cue: "The Story", text: "Tell how the boy brought just five loaves and two fish. Emphasize that Jesus thanked God before the miracle." },
-          { cue: "Discussion", text: "Ask: 'If you only had one cookie, would you give it to Jesus to share with a whole school?' [Let them debate!]" }
+          { cue: "[Discussion] 1 min", text: "Ask: 'If you had to share your lunch with the whole school, would you do it?'" },
+          { cue: "The Bible Story", text: "A young boy (probably their age!) gave 5 small loaves and 2 dried fish. It was just a snack. But Jesus thanked God for it and it started growing." },
+          { cue: "[Action Queue]", text: "Have kids cup their hands like they are catching bread falling from the sky. There were 12 baskets left over!" }
         ],
-        activity: { name: "Paper Basket Weaving", desc: "Using two colors of paper strips, show them how to weave a simple 'basket.' Inside the basket, have them write one 'small' thing they can do for others (like a smile or a high-five)." },
-        questions: ["What did the boy give Jesus?", "How many baskets were left over?", "What small thing can you share this week?"],
-        memory: "Give thanks to the Lord. — Psalm 107:1"
+        activity: { name: "12 Baskets Drawing", desc: "Draw 12 baskets on a page. In each basket, have the kids write or draw one 'blessing' or good thing God has given them." },
+        questions: ["Who gave Jesus the food?", "Why did Jesus have leftovers?", "What 'small' thing can you give to God? (A smile, a prayer, sharing a toy)."],
+        memory: "Give thanks to the Lord, for he is good. — Psalm 107:1"
       },
       {
-        title: "The Parable of the Sower",
+        title: "5. Parable of the Sower",
         passage: "Matthew 13:1–23",
-        objective: "To help kids understand that our hearts should be 'good soil' that listens to and obeys God's word.",
-        teacherNotes: "Use physical items like a rock, a handful of weeds, and a pot of dirt if available to show the different soils.",
+        objective: "To help kids understand that they need to keep their hearts 'soft' and ready to listen to God.",
+        sticky: "A seed is tiny, but it has enough power to crack a sidewalk if it grows right. God's word is just like that—it's small but powerful!",
         teach: [
-          { cue: "Action", text: "Pretend to throw seeds out in the room." },
-          { cue: "The Story", text: "Describe the four types of soil. Act out the birds eating seeds and the plants wilting in the sun." },
-          { cue: "Discussion", text: "Ask: 'What does a plant need to grow big and strong? How is our heart like a plant?'" }
+          { cue: "[Action Queue]", text: "Act out the 4 soils. 1. Stomp feet (Hard Path). 2. Shiver (Rocky Soil). 3. Choke hands (Thorns). 4. Reach high (Good Soil)." },
+          { cue: "The Bible Story", text: "Explain the 4 types of hearts. The 'Path' heart is too busy to listen. The 'Thorn' heart is too worried about toys and games." },
+          { cue: "[Discussion] 2 min", text: "Ask: 'What are some things that distract us from listening to God?' [Examples: Video games, being mean, being in a hurry]." }
         ],
-        activity: { name: "The Soil Walk", desc: "If you are outside, find a rock, a thorny weed, and some soft dirt. If inside, have them draw the four stages of the plant growing. Talk about what 'weeds' (distractions) look like in our lives." },
-        questions: ["What happened to the seed on the path?", "What are the 'thorns' in our life that stop us from listening to God?", "How do we keep our hearts like good soil?"],
+        activity: { name: "Seed Sort", desc: "If you have beans or seeds, let them touch them. If not, have them draw a picture of a giant tree growing out of a tiny heart. Label the roots 'OBEDIENCE'." },
+        questions: ["What happened to the seed on the path?", "What makes a heart 'good soil'?", "How can we pull the 'weeds' out of our hearts?"],
         memory: "Listen then to what the parable of the sower means. — Matthew 13:18"
       },
       {
-        title: "Jesus Teaches Us to Forgive",
+        title: "6. Jesus Teaches Forgiveness",
         passage: "Matthew 18:21–35",
-        objective: "To explain that because God has forgiven us for so much, we should be willing to forgive others.",
-        teacherNotes: "Forgiveness is hard for kids (and adults!). Make sure to explain that forgiving doesn't mean the bad thing was okay, but that we aren't holding onto the anger anymore.",
+        objective: "Kids will learn that we forgive others because God has forgiven us for much more.",
+        sticky: "The servant owed 10,000 'talents.' In today's money, that's over a BILLION dollars. He could never, ever pay it back. The King just gave it to him for free!",
         teach: [
-          { cue: "Intro", text: "Ask: 'Has anyone ever broken your favorite toy or been mean to you? How did it feel?'" },
-          { cue: "The Story", text: "Tell the story of the King and the Servant. Use big numbers to show how much the servant was forgiven, compared to the small amount he wouldn't forgive." },
-          { cue: "Action", text: "Have kids hold their breath as long as they can—then let it out. Forgiveness is like letting that breath out." }
+          { cue: "[Discussion] 1 min", text: "Ask: 'Is it easy or hard to forgive someone who was mean to you?'" },
+          { cue: "The Bible Story", text: "The King forgave a massive debt. But then that servant went out and choked a friend over 20 dollars. The King was heartbroken." },
+          { cue: "[Action Queue]", text: "Have kids make a tight fist (unforgiveness). Then have them open their hands wide (forgiveness). It feels better to be open!" }
         ],
-        activity: { name: "Eraser Illustration", desc: "Draw a pencil smudge on a paper. Ask how we fix it. Use an eraser. Explain that Jesus is our eraser, and we should be 'erasers' for our friends' mistakes too." },
-        questions: ["How many times did Peter think he should forgive?", "Why was the King upset with the servant?", "Who do you need to forgive today?"],
+        activity: { name: "The Great Eraser", desc: "Draw a 'sin' (like a lie or a mean word) in pencil. Use an eraser to wipe it away. Remind them: Jesus is our eraser, and we should be erasers for our friends." },
+        questions: ["How much did the King forgive?", "Why did the King get angry at the end?", "Who do you need to forgive today?"],
         memory: "Forgive as the Lord forgave you. — Colossians 3:13"
+      },
+      {
+        title: "7. Creation: Voice Power",
+        passage: "Genesis 1",
+        objective: "God is the only one powerful enough to make everything out of nothing.",
+        sticky: "God didn't use hammers or bricks. He just used His voice. He said 'Let there be light' and the sun—a giant ball of fire—popped into existence instantly!",
+        teach: [
+          { cue: "[Action Queue]", text: "Ask everyone to be perfectly silent. Count to 5. Explain that before the world, there was only silence and darkness." },
+          { cue: "The Story", text: "Go through the days of creation. God 'spoke' the stars, the whales, and the mountains into being." },
+          { cue: "[Discussion] 1 min", text: "Ask: 'If God's voice is this powerful, do you think He is powerful enough to help you with your problems?'" }
+        ],
+        activity: { name: "Invisible Art", desc: "Give kids a white crayon and white paper. Have them draw 'nothing.' Then have them color over it with a marker to reveal God's 'hidden' creation." },
+        questions: ["What was the very first thing God created?", "What did God use to make the world?", "Which animal is your favorite part of creation?"],
+        memory: "In the beginning, God created the heavens and the earth. — Genesis 1:1"
+      },
+      {
+        title: "8. The Ark: The Giant Rescue",
+        passage: "Genesis 6–9",
+        objective: "God is a rescuer who always keeps His promises.",
+        sticky: "The Ark was as long as 1.5 football fields and taller than a 3-story building. It stayed afloat for over a year! It wasn't just a 40-day cruise.",
+        teach: [
+          { cue: "[Discussion] 1 min", text: "Ask: 'What is the biggest boat you've ever seen? Imagine a boat big enough for every kind of animal!'" },
+          { cue: "The Story", text: "Noah obeyed God even when people laughed at him. He built the boat in the middle of dry land." },
+          { cue: "[Action Queue]", text: "March 2-by-2 around the room like the animals entering the Ark." }
+        ],
+        activity: { name: "Rainbow Promise", desc: "Draw a rainbow. On each color, write one word that describes God (Good, Strong, Loving, Kind, Holy, Fair, True)." },
+        questions: ["Why did Noah build the boat?", "What does the rainbow remind us of?", "How can we be like Noah and obey God even when it's hard?"],
+        memory: "I have set my rainbow in the clouds. — Genesis 9:13"
+      },
+      {
+        title: "9. Crossing the Red Sea",
+        passage: "Exodus 14",
+        objective: "When you feel trapped, God can make a way out of nowhere.",
+        sticky: "The water didn't just move; it stood up like two giant skyscraper walls on the left and right. And the ground at the bottom wasn't muddy—it was perfectly dry!",
+        teach: [
+          { cue: "[Action Queue]", text: "Create two lines of kids. Have them hold their hands up high to make a 'water tunnel.' Let others walk through." },
+          { cue: "The Story", text: "The Israelites were trapped between a huge army and a deep sea. Moses told them: 'Don't be afraid. Just watch God.'" },
+          { cue: "[Discussion] 2 min", text: "Ask: 'How would you feel walking between two giant walls of water?'" }
+        ],
+        activity: { name: "Red Light, Green Light (Red Sea Edition)", desc: "Standard game, but call it 'Escape from Egypt.' When you say 'Dry Ground,' they run. When you say 'Water Wall,' they freeze." },
+        questions: ["What did Moses hold up to part the sea?", "Why were the people scared?", "Is anything too hard for God?"],
+        memory: "The Lord will fight for you; you need only to be still. — Exodus 14:14"
+      },
+      {
+        title: "10. The Walls of Jericho",
+        passage: "Joshua 6",
+        objective: "God's power works best when we follow His instructions exactly.",
+        sticky: "The walls of Jericho were so thick that houses were built inside them! They didn't fall because of a bomb; they fell because of a SHOUT!",
+        teach: [
+          { cue: "[Action Queue]", text: "Have kids tip-toe in a circle silently. Explain they had to do this for 6 days. It was very hard to stay quiet!" },
+          { cue: "The Story", text: "On the 7th day, they marched 7 times, blew the trumpets, and gave a MIGHTY SHOUT. The ground shook and the walls crumbled." },
+          { cue: "[Discussion] 1 min", text: "Ask: 'Why do you think God told them to be silent for 6 days?'" }
+        ],
+        activity: { name: "Cup Walls", desc: "Stack paper cups into a tall wall. Have kids shout 'GOD IS STRONG!' and watch the teacher knock them down with one finger." },
+        questions: ["How many times did they march on the last day?", "What happened when they shouted?", "Does God always do things the way we expect?"],
+        memory: "By faith the walls of Jericho fell. — Hebrews 11:30"
+      },
+      {
+        title: "11. David & Goliath",
+        passage: "1 Samuel 17",
+        objective: "You don't need to be big to do big things for God.",
+        sticky: "Goliath was over 9 feet tall. That's taller than a basketball hoop! David didn't even use a sword; he used a smooth stone and a lot of faith.",
+        teach: [
+          { cue: "[Action Queue]", text: "Measure 9 feet on the wall with tape. Have kids look up. That's how big the giant was!" },
+          { cue: "The Story", text: "All the soldiers were shaking with fear. David was the only one who remembered that God was bigger than the giant." },
+          { cue: "[Discussion] 2 min", text: "Ask: 'What is a 'giant' problem in your life that you need God's help with?'" }
+        ],
+        activity: { name: "Target Practice", desc: "Crumple paper into 'stones.' Try to toss them into a bucket labeled 'The Giant' from across the room." },
+        questions: ["Why wasn't David scared?", "How many stones did David pick up?", "What did David use instead of a sword?"],
+        memory: "The battle is the Lord’s. — 1 Samuel 17:47"
+      },
+      {
+        title: "12. Daniel & The Lions' Den",
+        passage: "Daniel 6",
+        objective: "God is with us even in the scariest places.",
+        sticky: "Daniel was probably around 80 years old! He wasn't a young man. He spent the whole night with hungry lions, but he probably used one as a fluffy pillow.",
+        teach: [
+          { cue: "[Action Queue]", text: "Have kids make their loudest lion roars. Then, the teacher 'zips' their lips. That's what the angel did." },
+          { cue: "The Story", text: "Daniel chose to pray even when it was against the law. He knew God was more important than the King's rules." },
+          { cue: "[Discussion] 1 min", text: "Ask: 'Would you keep praying if you knew you'd be thrown to lions?'" }
+        ],
+        activity: { name: "Angel Shield", desc: "Draw a shield on a piece of paper. Inside, write 'GOD IS WITH ME.' Remind them that God sends angels to guard us." },
+        questions: ["Why was Daniel thrown in the den?", "Did the lions hurt him?", "Who did God send to help Daniel?"],
+        memory: "My God sent his angel, and he shut the mouths of the lions. — Daniel 6:22"
+      },
+      {
+        title: "13. The Fiery Furnace",
+        passage: "Daniel 3",
+        objective: "Stand up for what is right, even if you are the only one standing.",
+        sticky: "The furnace was 7 times hotter than normal—so hot the guards died just walking up to it. But Shadrach, Meshach, and Abednego didn't even smell like smoke when they came out!",
+        teach: [
+          { cue: "[Action Queue]", text: "Have everyone bow down except for one kid. Explain how hard it is to be the 'only one' standing up for God." },
+          { cue: "The Story", text: "The King saw FOUR people in the fire. The fourth person was Jesus, standing in the middle of the flames with His friends." },
+          { cue: "[Discussion] 1 min", text: "Ask: 'Why were the friends so brave?'" }
+        ],
+        activity: { name: "The Smoke Test", desc: "Smell your own shirt. Remind the kids that the friends didn't even smell like fire because God protected every single hair on their heads." },
+        questions: ["Who was the fourth man in the fire?", "What did the King do after they came out?", "Is it okay to be different if it means following Jesus?"],
+        memory: "We will not serve your gods. — Daniel 3:18"
+      },
+      {
+        title: "14. Jonah & The Giant Fish",
+        passage: "Jonah 1–4",
+        objective: "You can't hide from God, and He always gives second chances.",
+        sticky: "Jonah spent 3 days in a dark, slimy, seaweed-covered belly. It was the world's weirdest 'timeout' so he could think about his choices.",
+        teach: [
+          { cue: "[Action Queue]", text: "Have kids crawl under a table or desk. Ask: 'Can God see you under there?' Yes! He sees us everywhere." },
+          { cue: "The Story", text: "Jonah tried to run away from God's mission. But God loved Jonah (and the people of Nineveh) too much to let him go." },
+          { cue: "[Discussion] 2 min", text: "Ask: 'Have you ever tried to hide after doing something wrong? Did it work?'" }
+        ],
+        activity: { name: "Big Fish Drawing", desc: "Draw a giant fish. Inside the belly, draw Jonah praying. Talk about how we can talk to God even in 'slimy' situations." },
+        questions: ["Why did Jonah run away?", "How many days was he in the fish?", "What does 'second chance' mean?"],
+        memory: "I cried out to the Lord, and he answered me. — Jonah 2:2"
+      },
+      {
+        title: "15. Pentecost: The Helper Arrives",
+        passage: "Acts 2",
+        objective: "The Holy Spirit gives us power and boldness to share God's love.",
+        sticky: "It sounded like a hurricane inside a house! Then, little flames of fire sat on everyone's heads, but nobody's hair got burned. It was a miracle of power!",
+        teach: [
+          { cue: "[Action Queue]", text: "Have everyone blow air as hard as they can. 'Whoosh!' The Holy Spirit is like a powerful wind we can't see." },
+          { cue: "The Story", text: "The disciples were scared and hiding. But when the Holy Spirit came, they became brave and started telling everyone about Jesus." },
+          { cue: "[Discussion] 1 min", text: "Ask: 'What would you do if you saw a flame of fire on your friend's head?'" }
+        ],
+        activity: { name: "Wind Power", desc: "Use a paper plate as a fan. Try to blow a crumpled piece of paper across the floor. Explain that the Spirit 'moves' us just like the wind." },
+        questions: ["What did the Holy Spirit look like?", "Why were the disciples suddenly brave?", "Can the Holy Spirit help you today?"],
+        memory: "You will receive power when the Holy Spirit comes on you. — Acts 1:8"
+      },
+      {
+        title: "16. The Empty Tomb",
+        passage: "Matthew 28",
+        objective: "Jesus is alive, and He has already won the victory over death.",
+        sticky: "The stone over the tomb weighed as much as a car! An angel moved it like it was a toy just to show everyone that the tomb was already empty.",
+        teach: [
+          { cue: "[Action Queue]", text: "Have everyone pretend to sleep. On the count of 3, jump up and shout 'HE IS ALIVE!'" },
+          { cue: "The Story", text: "Jesus died for our sins, but death couldn't hold Him. He walked out of the grave and talked to His friends." },
+          { cue: "[Discussion] 2 min", text: "Ask: 'How would you feel if you were the first person to see the empty tomb?'" }
+        ],
+        activity: { name: "Victory RPS", desc: "Do a Rock-Paper-Scissors tournament. The final winner gets to shout the Memory Verse. This represents the 'Victory' Jesus won for us." },
+        questions: ["Who moved the stone?", "Why was the tomb empty?", "Where is Jesus now?"],
+        memory: "He is not here; he has risen! — Matthew 28:6"
       }
     ];
 
-    function toggleNav() {
-      document.getElementById('lessonNav').classList.toggle('open');
-      document.getElementById('overlay').classList.toggle('open');
-    }
-
-    function toggleTheme() {
-      const html = document.documentElement;
-      const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-      html.setAttribute('data-theme', next);
-      renderKnob(next);
-    }
-
-    function renderKnob(theme) {
-      document.getElementById('knob').innerHTML = theme === 'light'
-        ? `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.42 5.58l1.42-1.42"></path></svg>`
-        : `<svg viewBox="0 0 24 24" style="stroke:#818cf8"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>`;
-    }
-
+    function toggleNav() { document.getElementById('lessonNav').classList.toggle('open'); }
     function loadLesson(idx) {
       document.querySelectorAll('.lesson-link').forEach(l => l.classList.remove('active'));
-      const activeLink = document.getElementById(`l-${idx}`);
-      if (activeLink) activeLink.classList.add('active');
-
+      document.getElementById(`l-${idx}`).classList.add('active');
       const l = lessons[idx];
       document.getElementById('lessonContent').innerHTML = `
-        <div class="chip">${l.passage}</div>
-        <h1 class="lesson-title">${l.title}</h1>
-        <div class="objective"><strong>Objective:</strong> ${l.objective}</div>
-        
-        <div class="teacher-note"><strong>Teacher's Tip:</strong> ${l.teacherNotes}</div>
-        
-        <section>
-          <h3>Teaching Path</h3>
-          <ul>${l.teach.map(i => `<li><span class="cue">${i.cue}</span>${i.text}</li>`).join('')}</ul>
-        </section>
-
-        <section>
-          <h3>Activity: ${l.activity.name}</h3>
-          <div class="activity-box">${l.activity.desc}</div>
-        </section>
-
-        <section>
-          <h3>Discussion Questions</h3>
-          <ul>${l.questions.map(q => `<li>${q}</li>`).join('')}</ul>
-        </section>
-        
-        <div class="memory-card">
-          <span style="font-size:0.7rem; text-transform:uppercase; opacity:0.8; display:block; margin-bottom:10px;">Memory Verse</span>
-          ${l.memory}
-        </div>
+        <div class="chip">Bible Passage: ${l.passage}</div>
+        <h1 style="margin:0 0 0.5rem 0; font-size:2.4rem; letter-spacing:-1px;">${l.title}</h1>
+        <p style="font-size:1.1rem; color:var(--text-muted); margin-bottom:2rem;"><strong>Objective:</strong> ${l.objective}</p>
+        <div class="sticky-box"><strong>Sticky Fact for Kids:</strong><br>${l.sticky}</div>
+        <section><h3>Teaching Path & Cues</h3>${l.teach.map(i => `<div class="teach-item"><span class="cue">${i.cue}</span>${i.text}</div>`).join('')}</section>
+        <section><h3>Activity: ${l.activity.name}</h3><div class="activity-card">${l.activity.desc}</div></section>
+        <section><h3>Discussion Questions</h3><ul class="question-list">${l.questions.map(q => `<li>${q}</li>`).join('')}</ul></section>
+        <div class="memory-card"><span style="font-size:0.8rem; text-transform:uppercase; display:block; opacity:0.8; margin-bottom:12px; letter-spacing:2px;">Memory Verse</span>${l.memory}</div>
       `;
       window.scrollTo(0, 0);
-      if (window.innerWidth <= 850 && document.getElementById('lessonNav').classList.contains('open')) toggleNav();
+      if (window.innerWidth <= 850) toggleNav();
     }
-
-    lessons.forEach((lesson, i) => {
-      const link = document.createElement('a');
-      link.textContent = lesson.title; link.className = 'lesson-link'; link.id = `l-${i}`;
-      link.onclick = () => loadLesson(i);
-      document.getElementById('lessonNav').appendChild(link);
+    const nav = document.getElementById('lessonNav');
+    lessons.forEach((l, i) => {
+      const a = document.createElement('a'); a.textContent = l.title; a.className = 'lesson-link'; a.id = `l-${i}`; a.onclick = () => loadLesson(i); nav.appendChild(a);
     });
-
-    renderKnob('light');
     loadLesson(0);
   </script>
 </body>
