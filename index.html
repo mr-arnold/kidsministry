@@ -3,8 +3,9 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>244 Kingdom Kids | Teacher Portal</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>244 Kingdom Kids</title>
   <style>
     :root {
       --bg-app: #f8fafc;
@@ -14,81 +15,118 @@
       --border: #e2e8f0;
       --accent: #4f46e5;
       --accent-soft: #f5f3ff;
+      --nav-hover: #f1f5f9;
       --teacher-note: #f0fdf4;
       --teacher-border: #bbf7d0;
       --activity-bg: #fff7ed;
-      --deep-dive: #eff6ff;
     }
 
-    * { box-sizing: border-box; }
-    body { margin: 0; background: var(--bg-app); font-family: 'Inter', sans-serif; color: var(--text-main); line-height: 1.6; }
-    
+    [data-theme="dark"] {
+      --bg-app: #020617;
+      --bg-sidebar: #0f172a;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #818cf8;
+      --accent-soft: rgba(79, 70, 229, 0.2);
+      --nav-hover: #1e293b;
+      --teacher-note: #064e3b;
+      --teacher-border: #065f46;
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      margin: 0; background: var(--bg-app);
+      font-family: 'Inter', -apple-system, system-ui, sans-serif;
+      color: var(--text-main); line-height: 1.6;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
     header {
       height: 64px; background: var(--bg-sidebar); border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1.5rem; position: sticky; top: 0; z-index: 100;
+      padding-top: env(safe-area-inset-top); height: calc(64px + env(safe-area-inset-top));
     }
+
+    .logo { font-weight: 800; color: var(--accent); font-size: 1.1rem; }
+
+    .theme-switch { position: relative; display: inline-block; width: 58px; height: 30px; }
+    .theme-switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+      background-color: transparent; border: 2px solid var(--border);
+      transition: .4s; border-radius: 30px; display: flex; align-items: center;
+      justify-content: space-between; padding: 0 6px;
+    }
+    .slider:before {
+      position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px;
+      background-color: var(--accent); transition: .4s; border-radius: 50%; z-index: 2;
+    }
+    input:checked+.slider:before { transform: translateX(28px); }
+    .slider svg { width: 14px; height: 14px; stroke: var(--text-muted); stroke-width: 2.5; fill: none; z-index: 1; }
 
     .app-viewport { display: flex; min-height: calc(100vh - 64px); }
 
     nav {
-      width: 320px; background: var(--bg-sidebar); border-right: 1px solid var(--border);
-      padding: 1.5rem; overflow-y: auto; height: calc(100vh - 64px); position: sticky; top: 64px;
+      width: 300px; background: var(--bg-sidebar); border-right: 1px solid var(--border);
+      padding: 1.5rem; flex-shrink: 0; overflow-y: auto; height: calc(100vh - 64px);
+      position: sticky; top: 64px; padding-bottom: calc(120px + env(safe-area-inset-bottom));
     }
 
     .lesson-link {
       display: block; padding: 12px; margin-bottom: 6px; border-radius: 8px;
-      text-decoration: none; color: var(--text-main); cursor: pointer; font-size: 0.9rem;
+      text-decoration: none; color: var(--text-main); font-size: 0.95rem; cursor: pointer;
     }
-
     .lesson-link.active { background: var(--accent-soft); color: var(--accent); font-weight: 700; border-left: 4px solid var(--accent); }
 
-    main { flex: 1; padding: 2rem; display: flex; flex-direction: column; align-items: center; }
-    .content-container { width: 100%; max-width: 850px; }
+    main { flex: 1; padding: 2rem; display: flex; flex-direction: column; align-items: center; padding-bottom: calc(160px + env(safe-area-inset-bottom)); }
+    .content-container { width: 100%; max-width: 720px; }
 
-    .teacher-manual-box {
-      background: var(--teacher-note); border: 1px solid var(--teacher-border);
-      padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;
+    .chip { font-size: 0.75rem; font-weight: 700; color: var(--accent); background: var(--accent-soft); padding: 6px 14px; border-radius: 8px; margin-bottom: 1.5rem; display: inline-block; }
+
+    .sticky-box {
+      background: #fffbeb; border: 1px solid #fef3c7; border-left: 5px solid #f59e0b;
+      padding: 1.25rem; border-radius: 12px; margin-bottom: 2rem; font-size: 0.95rem;
     }
+    [data-theme="dark"] .sticky-box { background: #1e1b16; border-color: #451a03; color: #fbbf24; }
 
-    .deep-dive-box {
-      background: var(--deep-dive); border: 1px solid #dbeafe;
-      padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0;
+    .teacher-manual-box { background: var(--teacher-note); border: 1px solid var(--teacher-border); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; }
+    .script-block { background: var(--bg-sidebar); border-left: 4px solid var(--accent); padding: 1.5rem; margin: 1.5rem 0; font-style: italic; border-radius: 0 12px 12px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    .action-badge { background: #f59e0b; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; margin-right: 8px; }
+
+    section { margin-bottom: 3rem; width: 100%; }
+    h3 { font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; margin-bottom: 1.25rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .teach-item { background: var(--bg-sidebar); border: 1px solid var(--border); padding: 1.5rem; border-radius: 14px; margin-bottom: 15px; }
+    .cue { color: var(--accent); font-weight: 900; font-size: 0.7rem; text-transform: uppercase; display: block; margin-bottom: 6px; }
+    .activity-card { background: var(--accent-soft); border: 2px dashed var(--accent); padding: 1.5rem; border-radius: 20px; }
+    .question-list li { list-style: none; padding: 10px; border-bottom: 1px solid var(--border); }
+
+    .memory-card { background: var(--accent); color: white; padding: 2.5rem; border-radius: 24px; text-align: center; font-size: 1.4rem; font-weight: 800; margin-top: 2rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); }
+
+    .mobile-nav-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, var(--bg-app) 70%, transparent); backdrop-filter: blur(8px); padding: 15px 20px calc(25px + env(safe-area-inset-bottom)) 20px; z-index: 1000; text-align: center; }
+    .footer-btn { background: #000; color: #fff; width: 100%; max-width: 400px; height: 56px; border-radius: 18px; border: none; font-weight: 700; font-size: 1rem; display: inline-flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; }
+    
+    @media (max-width: 850px) {
+      nav { display: none; position: fixed; top: calc(64px + env(safe-area-inset-top)); left: 0; width: 100%; height: calc(100vh - (64px + env(safe-area-inset-top))); z-index: 90; background: var(--bg-sidebar); }
+      nav.open { display: block; }
+      .mobile-nav-bar { display: block; }
+      main { padding: 1.5rem; }
     }
-
-    .script-block {
-      background: var(--bg-sidebar); border-left: 4px solid var(--accent);
-      padding: 1.5rem; margin: 1.5rem 0; font-style: italic; border-radius: 0 12px 12px 0;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
-
-    .action-badge {
-      background: #f59e0b; color: white; padding: 4px 8px; border-radius: 4px;
-      font-size: 0.7rem; font-weight: 800; text-transform: uppercase; margin-right: 8px;
-    }
-
-    .activity-box {
-      background: var(--activity-bg); border: 2px dashed #fed7aa;
-      padding: 1.5rem; border-radius: 12px; margin: 2rem 0;
-    }
-
-    .time-estimate {
-      float: right; font-weight: 800; color: var(--accent); font-size: 0.8rem; background: var(--accent-soft); padding: 2px 8px; border-radius: 10px;
-    }
-
-    .memory-card {
-      background: var(--accent); color: white; padding: 2.5rem;
-      border-radius: 24px; text-align: center; font-size: 1.4rem; font-weight: 800;
-    }
-
-    @media (max-width: 850px) { nav { display: none; } main { padding: 1rem; } }
   </style>
 </head>
 
 <body>
-
   <header>
-    <strong>244 Kingdom Kids | Teacher Portal</strong>
-    <span style="font-size: 0.8rem; opacity: 0.7;">Lesson Mode: Full Workshop</span>
+    <div class="logo">244 Kingdom Kids</div>
+    <label class="theme-switch">
+      <input type="checkbox" id="themeToggle" onclick="handleTheme()">
+      <span class="slider">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </span>
+    </label>
   </header>
 
   <div class="app-viewport">
@@ -96,92 +134,117 @@
     <main><div class="content-container" id="lessonContent"></div></main>
   </div>
 
+  <div class="mobile-nav-bar"><button class="footer-btn" onclick="toggleNav()">Select Lesson</button></div>
+
   <script>
     const lessons = [
       {
+        title: "How to Use This App",
+        passage: "Volunteer Cheat Sheet",
+        objective: "To give you the confidence to lead kids, even if you've never taught before.",
+        sticky: "Don't aim for 'perfect teaching.' Aim for 'perfectly connected.' Kids remember how you made them feel more than the exact words you said.",
+        isFullScript: false,
+        teach: [
+          { cue: "The Storyteller Secret", text: "Don't just read the script. Use your hands, change your voice for different characters, and look the kids in the eye." },
+          { cue: "Getting Kids to Talk", text: "When asking a question, wait at least 5 seconds. Kids need time to think." }
+        ],
+        activity: { name: "Volunteer Prayer", desc: "Take 30 seconds to pray before the kids arrive. Ask God to give you His heart for these children." },
+        questions: ["What do you do if a kid won't stop talking?", "How long should you wait for an answer?"],
+        memory: "Start children off on the way they should go. — Proverbs 22:6"
+      },
+      {
         title: "The Ark: Radical Trust",
-        passage: "Genesis 6:9 – 9:17",
-        objective: "Teach kids that God’s instructions are for our protection and His promises are unbreakable.",
+        passage: "Genesis 6–9",
+        objective: "God’s instructions are for our protection, even when they don’t make sense to others.",
+        isFullScript: true,
         fullContent: `
           <div class="teacher-manual-box">
-            <strong>The Strategy (30-60 min total):</strong> 
-            Don't rush the "building" phase. Let the kids feel how long and difficult the task was for Noah. This makes the payoff of the Rainbow much bigger.
+            <strong>Teacher Mindset:</strong> Focus on the Ark as a "Refuge." Noah wasn't just building a boat; he was building a place where his family would be safe with God.
           </div>
-
-          <h2>Phase 1: The World & The Call <span class="time-estimate">10 MIN</span></h2>
-          <div class="script-block">
-            "Before the flood, the world was in bad shape. People were mean and didn't care about God. But Noah 'walked with God.' That means he was God's best friend. God gave him a job that sounded impossible."
-          </div>
+          <h2>1. The Hook: Standing Alone</h2>
+          <div class="script-block">"In Noah's day, the whole world had forgotten about God. Everyone was being mean and selfish. But Noah was different. Imagine being the ONLY person in a room doing the right thing. It takes courage!"</div>
+          <h2>2. The 'Crazy' Command</h2>
+          <p><span class="action-badge">Action</span> Have kids pretend to hammer. Mock them: 'Hey Noah, why build a boat? There's no water!'</p>
+          <div class="script-block">"Noah kept hammering for decades. He trusted God's voice more than the neighbors' laughter."</div>
+          <h2>3. The Storm Ritual</h2>
+          <p><span class="action-badge">Action</span> <strong>The Rain Ritual:</strong> 1. Rub palms. 2. Snap fingers. 3. Clap laps. 4. Sudden Silence.</p>
           
-          <div class="deep-dive-box">
-            <strong>Discussion:</strong> 
-            * What is the hardest thing you’ve ever had to do because it was the 'right' thing? 
-            * How do you think Noah felt when God told him a flood was coming even though it hadn't rained yet?
+          <h2>4. Activity: The Promise Page</h2>
+          <div class="activity-card">
+            <strong>Supplies:</strong> Blank paper and colors.<br>
+            Have kids draw the Ark floating on the water. Then, have them draw a huge rainbow over the top.
           </div>
-
-          <h2>Phase 2: The Impossible Job <span class="time-estimate">15 MIN</span></h2>
-          <p><span class="action-badge">Interactive</span> 
-            Have the kids stand up. Measure out the room. Tell them the Ark was <strong>450 feet long</strong>. 
-            If your room is 20 feet wide, tell them the Ark was 22 times longer than this room!
-          </p>
-          
-          <div class="script-block">
-            "Imagine building this giant wooden skyscraper for 75 to 100 years. Every day, Noah's neighbors would walk by and laugh. 'Hey Noah, where's the water?' they'd yell. Noah had to trust God's voice more than the crowd's laughter."
-          </div>
-
-          <p><span class="action-badge">Action</span> Have everyone 'hammer' on the count of three. Then stop. Mock them: 'You guys look silly! Why are you hammering?' <strong>Repeat this 3 times</strong> to show the repetition Noah faced.</p>
-
-          <h2>Phase 3: The Storm & The Safety <span class="time-estimate">10 MIN</span></h2>
-          <p><span class="action-badge">Action</span> <strong>The Rain Ritual:</strong> 
-            1. Rub hands (wind) 
-            2. Fast finger snaps (light rain) 
-            3. Slap thighs (heavy downpour) 
-            4. Stomp feet (thunder) 
-            5. <strong>FREEZE</strong> in total silence.
-          </p>
-          <div class="script-block">
-            "The Bible says 'The Lord shut him in.' Noah didn't have to close the door; God did. Inside, it was loud and scary, but they were safe. The Ark was a 'Refuge'—a safe place in a messy world."
-          </div>
-
-          <h2>Phase 4: The Drawing & The Promise <span class="time-estimate">20 MIN</span></h2>
-          <div class="activity-box">
-            <strong>Creative Activity: The Promise Page</strong>
-            <p>Give out blank sheets of paper. </p>
-            <p><strong>Step 1:</strong> Draw the Ark in the middle of a giant, wavy ocean. (Take 5 mins to talk about the animals inside).</p>
-            <p><strong>Step 2:</strong> Draw a rainbow that touches both sides of the paper. Use EVERY color you have.</p>
-            <p><strong>Step 3:</strong> Write 'GOD KEEPS HIS PROMISES' at the bottom.</p>
-          </div>
-
-          <div class="deep-dive-box">
-            <strong>Teacher's Closing Talk:</strong>
-            "A rainbow is like God's signature. He promised He would never flood the earth like that again. Whenever you see a rainbow, or even when you see a storm, remember that God is your Ark. He is the one who keeps you safe."
-          </div>
-
-          <div class="memory-card">
-            "I have set my rainbow in the clouds... the sign of my covenant between me and the earth." <br>— Genesis 9:13
-          </div>
+          <div class="memory-card">"I have set my rainbow in the clouds... the sign of my covenant." — Gen 9:13</div>
         `
       },
       {
-        title: "Creation: Voice Power",
-        passage: "Genesis 1",
-        objective: "God’s Word has the power to create beauty out of nothing.",
-        fullContent: "<h2>Content Coming...</h2>"
+        title: "God Sees the Heart",
+        passage: "1 Samuel 16:1–13",
+        objective: "God cares more about who they are on the inside than how they look.",
+        sticky: "David was the forgotten brother! His dad didn't even bring him to the meeting at first.",
+        isFullScript: false,
+        teach: [
+          { cue: "Teacher Intro", text: "God has 'heart-vision.' He sees things we can't see." },
+          { cue: "[Action Queue]", text: "Hands over eyes like binoculars. We look at the outside, but God looks at the heart!" }
+        ],
+        activity: { name: "The Heart Reveal", desc: "Draw a heart. Inside, draw one thing you are good at that nobody sees (like being kind)." },
+        questions: ["Why didn't Jesse bring David at first?", "What are 3 'heart' qualities?"],
+        memory: "The Lord looks at the heart. — 1 Samuel 16:7"
+      },
+      {
+        title: "Jesus Calms the Storm",
+        passage: "Mark 4:35–41",
+        objective: "Jesus is bigger than our scariest problems.",
+        sticky: "Professional fishermen were terrified, but Jesus was sleeping on a pillow.",
+        isFullScript: false,
+        teach: [
+          { cue: "[Action Queue]", text: "Make storm sounds. On 3, teacher shouts 'PEACE, BE STILL!' and everyone freezes." },
+          { cue: "The Story", text: "Jesus wasn't worried because He created the wind." }
+        ],
+        activity: { name: "Boat Folding", desc: "Fold a paper boat. Write 'JESUS IS IN MY BOAT' on the side." },
+        questions: ["Why was Jesus sleeping?", "What did the disciples learn?"],
+        memory: "Even the wind and waves obey him. — Mark 4:41"
       }
+      // ... Add your other lessons here using the same object structure ...
     ];
 
+    function toggleNav() { document.getElementById('lessonNav').classList.toggle('open'); }
+    function handleTheme() {
+      const isChecked = document.getElementById('themeToggle').checked;
+      document.documentElement.setAttribute('data-theme', isChecked ? 'dark' : 'light');
+    }
+
     function loadLesson(idx) {
+      document.querySelectorAll('.lesson-link').forEach(l => l.classList.remove('active'));
+      const activeLink = document.getElementById(`l-${idx}`);
+      if (activeLink) activeLink.classList.add('active');
+
       const l = lessons[idx];
-      document.querySelectorAll('.lesson-link').forEach(link => link.classList.remove('active'));
-      document.getElementById(`l-${idx}`).classList.add('active');
-      document.getElementById('lessonContent').innerHTML = `
-        <h1 style="font-size: 2.5rem; margin-bottom: 0;">${l.title}</h1>
-        <p style="color: var(--text-muted); margin-top: 5px; font-size: 1.1rem;"><strong>Passage:</strong> ${l.passage}</p>
-        <p style="font-size: 1.1rem;"><strong>Goal:</strong> ${l.objective}</p>
-        <hr style="border: 0; border-top: 1px solid var(--border); margin: 2rem 0;">
-        ${l.fullContent}
-      `;
-      window.scrollTo(0,0);
+      const content = document.getElementById('lessonContent');
+      
+      if (l.isFullScript) {
+        content.innerHTML = `
+          <div class="chip">Passage: ${l.passage}</div>
+          <h1 style="margin:0 0 0.5rem 0; font-size:2.2rem; line-height:1.1;">${l.title}</h1>
+          <p><strong>Goal:</strong> ${l.objective}</p>
+          ${l.fullContent}
+          <div style="height: 100px;"></div>
+        `;
+      } else {
+        content.innerHTML = `
+          <div class="chip">Passage: ${l.passage}</div>
+          <h1 style="margin:0; font-size:2.2rem; line-height:1.1;">${l.title}</h1>
+          <p style="color:var(--text-muted);"><strong>Objective:</strong> ${l.objective}</p>
+          <div class="sticky-box"><strong>Sticky Fact:</strong><br>${l.sticky}</div>
+          <section><h3>Teaching Path</h3>${l.teach.map(i => `<div class="teach-item"><span class="cue">${i.cue}</span>${i.text}</div>`).join('')}</section>
+          <section><h3>Activity: ${l.activity.name}</h3><div class="activity-card">${l.activity.desc}</div></section>
+          <section><h3>Discussion Questions</h3><ul class="question-list">${l.questions.map(q => `<li>${q}</li>`).join('')}</ul></section>
+          <div class="memory-card">${l.memory}</div>
+          <div style="height: 100px;"></div>
+        `;
+      }
+      window.scrollTo(0, 0);
+      if (window.innerWidth <= 850) toggleNav();
     }
 
     const nav = document.getElementById('lessonNav');
@@ -190,7 +253,7 @@
       a.textContent = l.title; a.className = 'lesson-link'; a.id = `l-${i}`; a.onclick = () => loadLesson(i);
       nav.appendChild(a);
     });
-    loadLesson(0);
+    loadLesson(1); // Default to Ark Lesson
   </script>
 </body>
 </html>
